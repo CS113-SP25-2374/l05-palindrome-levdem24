@@ -1,17 +1,27 @@
 public class Palindrome {
-    /**
-     * Break a stack into two, push the first half to one stack, then push
-     * second half to a stack, then pop & push to a second stack.
-     * If the string is odd, the middle element goes to both stacks (or neither!)
-     * R A C E C A R
-     * Stack 1: R A C E
-     * Middle Letter: E
-     * Stack 2: E C A R
-     * Re-stack either the first or second stack and compare them.
-     * @param s a string to test
-     * @return true if they are the same
-     */
     public boolean isPalindrome(String s) {
+        MyStack<Character> stack1 = new MyStack<>();
+        MyStack<Character> stack2 = new MyStack<>();
+
+        int len = s.length();
+        int mid = len / 2;
+
+        for (int i = 0; i < mid; i++) {
+            stack1.push(s.charAt(i));
+        }
+
+        int startSecondHalf = (len % 2 == 0) ? mid : mid + 1;
+
+        for (int i = len - 1; i >= startSecondHalf; i--) {
+            stack2.push(s.charAt(i));
+        }
+
+        while (!stack1.empty() && !stack2.empty()) {
+            if (!stack1.pop().equals(stack2.pop())) {
+                return false;
+            }
+        }
+
         return true;
     }
 }
